@@ -79,15 +79,27 @@ class Tag
      *
      * @param string $src archivo javascript
      * @param boolean $cache indica si se usa cache de navegador
+     * @param int $per indica si la ruta del archivo es personalizada
      */
-    public static function js($src, $cache = TRUE)
+    public static function js($src,$per=1, $cache = TRUE)
     {
-        $src = "javascript/$src.js";
-        if (!$cache) {
-            $src .= '?nocache=' . uniqid();
-        }
-
-        return '<script type="text/javascript" src="' . PUBLIC_PATH . $src . '"></script>';
+        if($per==1):
+        $srcf = "javascript/$src.js";
+        
+        if (!$cache):
+            $srcf .= '?nocache=' . uniqid();
+        endif;
+        
+        return '<script type="text/javascript" src="' . PUBLIC_PATH . $srcf . '"></script>';
+        
+        else:
+        $srcf = "$src.js";
+        
+        if (!$cache):
+            $srcf .= '?nocache=' . uniqid();
+        endif;
+        return '<script type="text/javascript" src="' . PUBLIC_PATH . $srcf . '"></script>';    
+        endif;
     }
 
     /**
@@ -96,9 +108,9 @@ class Tag
      * @param string $src archivo css
      * @param string $media medio de la hoja de estilo
      */
-    public static function css($src, $media = 'screen')
+    public static function css($src, $per = 1, $media = 'screen')
     {
-        self::$_css[] = array('src' => $src, 'media' => $media);
+        self::$_css[] = array('src' => $src, 'media' => $media, 'per'=> $per);
     }
 
     /**

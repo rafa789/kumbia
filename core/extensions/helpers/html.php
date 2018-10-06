@@ -162,7 +162,11 @@ class Html
     {
         $code = '';
         foreach (Tag::getCss() as $css) {
+            if($css['per'] == 1):
             $code .= '<link href="'.PUBLIC_PATH."css/{$css['src']}.css\" rel=\"stylesheet\" type=\"text/css\" media=\"{$css['media']}\" />".PHP_EOL;
+            else:
+            $code .= '<link href="'.PUBLIC_PATH."{$css['src']}.css\" rel=\"stylesheet\" type=\"text/css\" media=\"{$css['media']}\" />".PHP_EOL;    
+            endif;
         }
 
         return $code;
